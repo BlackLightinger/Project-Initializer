@@ -1,0 +1,23 @@
+<resources>
+    <string name="ic_android_name">Android icon</string>
+    <string name="ic_profile_name">Profile icon</string>
+    <string name="ic_dependencies_name">Dependencies icon</string>
+    <string name="ic_preview_name">Preview icon</string>
+    <string name="ic_download_name">Download icon</string>
+    <string name="ic_search_name">Search icon</string>
+    <string name="ic_configure_name">Configure icon</string>
+    <string name="ic_dropdown_arrow_name">Dropdown arrow icon</string>
+    <string name="ic_cancel_name">Cancel icon</string>
+
+    <string name="start_android">Start Android</string>
+    <string name="new_android_project">New Android Project</string>
+    <string name="download">Download</string>
+    <string name="project_artifact">Project artifact</string>
+    <string name="configure">Configure</string>
+    <string name="new_project_description">Download a project skeleton using the provided options, dependencies and plugins below.</string>
+    <string name="dependencies">Dependencies</string>
+    <string name="preview">Preview</string>
+
+    <string name="search_dependencies">Search dependencies...</string>
+    <string name="select_category">Select category...</string>
+</resources>
