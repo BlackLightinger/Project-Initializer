@@ -5,8 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
@@ -24,8 +23,15 @@ import org.locker.start_android.presentation.compose.theme.Space32
 @Composable
 fun DownloadCard(
     onDownloadClick: () -> Unit,
-    onConfigureClick: () -> Unit,
+    artifactValue: String,
+    onArtifactValueChange: (String) -> Unit,
     fileName: String,
+    minSdk: Int,
+    targetSdk: Int,
+    compileSdk: Int,
+    onMinSdkChange: (String) -> Unit,
+    onTargetSdkChange: (String) -> Unit,
+    onCompileSdkChange: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Box(
@@ -39,20 +45,24 @@ fun DownloadCard(
             horizontalArrangement = Arrangement.Start,
             modifier = Modifier
                 .padding(horizontal = Space32, vertical = Space16)
-                .fillMaxSize()
+                .fillMaxWidth()
         ) {
             DownloadProjectArtifact(
-                onConfigureClick = onConfigureClick,
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .weight(3f)
+                artifactValue = artifactValue,
+                onArtifactChange = onArtifactValueChange,
+                minSdk = minSdk,
+                targetSdk = targetSdk,
+                compileSdk = compileSdk,
+                onMinSdkChange = onMinSdkChange,
+                onTargetSdkChange = onTargetSdkChange,
+                onCompileSdkChange = onCompileSdkChange,
+                modifier = Modifier.weight(3f)
             )
 
             Spacer(Modifier.width(Size32))
 
             StartAndroidVerticalDivider(
                 color = LightGreyColor,
-                modifier = Modifier.fillMaxHeight()
             )
 
             Spacer(Modifier.width(Size32))
@@ -60,9 +70,7 @@ fun DownloadCard(
             DownloadButtonWithProjectName(
                 onDownloadClick = onDownloadClick,
                 fileName = fileName,
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .weight(2f)
+                modifier = Modifier.weight(2f)
             )
         }
     }
