@@ -16,6 +16,8 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import org.locker.start_android.presentation.compose.common.StartAndroidHorizontalDivider
 import org.locker.start_android.presentation.compose.common.noRippleClickable
+import org.locker.start_android.presentation.compose.navigation.MainNavHost
+import org.locker.start_android.presentation.compose.navigation.ProjectNavigationBar
 import org.locker.start_android.presentation.compose.panes.start_pane.view.DownloadRow
 import org.locker.start_android.presentation.compose.panes.start_pane.view.TopBarRow
 import org.locker.start_android.presentation.compose.theme.LightGreyColor
@@ -70,6 +72,29 @@ fun StartPane(
                     .fillMaxWidth()
                     .height(Size160)
                     .padding(bottom = Space16)
+            )
+
+            ProjectNavigationBar(
+                navigatePane = { paneName ->
+                    navController.navigate(paneName) {
+                        popUpTo(navController.graph.findStartDestination().id) {
+                            inclusive = true
+                        }
+                        launchSingleTop = true
+                    }
+                },
+                currentRoute = currentRoute,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = Space16)
+                    .height(Size32)
+            )
+
+            MainNavHost(
+                navHostController = navController,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f)
             )
         }
     }

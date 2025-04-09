@@ -14,5 +14,4 @@ fun App() {
             modifier = Modifier.fillMaxSize()
         )
     }
-
 }
