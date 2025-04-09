@@ -8,7 +8,11 @@ import org.locker.start_android.presentation.compose.theme.StartAndroidTheme
 
 @Composable
 fun App() {
+
     StartAndroidTheme {
-        StartPane(modifier = Modifier.fillMaxSize())
+        StartPane(
+            modifier = Modifier.fillMaxSize()
+        )
     }
+
 }
