@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
@@ -24,7 +23,15 @@ import startandroid.composeapp.generated.resources.new_project_description
 @Composable
 fun DownloadRow(
     onDownloadClick: () -> Unit,
-    onConfigureClick: () -> Unit,
+    artifactValue: String,
+    onArtifactValueChange: (String) -> Unit,
+    fileName: String,
+    minSdk: Int,
+    targetSdk: Int,
+    compileSdk: Int,
+    onMinSdkChange: (String) -> Unit,
+    onTargetSdkChange: (String) -> Unit,
+    onCompileSdkChange: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -32,15 +39,20 @@ fun DownloadRow(
         horizontalArrangement = Arrangement.Start,
         modifier = modifier
     ) {
-        DownloadRowText(modifier = Modifier.fillMaxHeight().weight(1f))
+        DownloadRowText(modifier = Modifier.weight(1f))
 
         DownloadCard(
             onDownloadClick = onDownloadClick,
-            onConfigureClick = onConfigureClick,
-            fileName = "start_android.zip",
-            modifier = Modifier
-                .fillMaxHeight()
-                .weight(1f)
+            artifactValue = artifactValue,
+            onArtifactValueChange = onArtifactValueChange,
+            fileName = fileName,
+            minSdk = minSdk,
+            targetSdk = targetSdk,
+            compileSdk = compileSdk,
+            onMinSdkChange = onMinSdkChange,
+            onTargetSdkChange = onTargetSdkChange,
+            onCompileSdkChange = onCompileSdkChange,
+            modifier = Modifier.weight(1f)
         )
     }
 }
@@ -57,9 +69,7 @@ private fun DownloadRowText(
         Column(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.Start,
-            modifier = Modifier
-                .fillMaxHeight()
-                .weight(1f)
+            modifier = Modifier.weight(1f)
         ) {
             Text(
                 text = stringResource(Res.string.new_android_project),

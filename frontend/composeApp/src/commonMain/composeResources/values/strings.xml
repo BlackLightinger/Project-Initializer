@@ -18,6 +18,10 @@
     <string name="dependencies">Dependencies</string>
     <string name="preview">Preview</string>
 
+    <string name="min_sdk">Min Sdk</string>
+    <string name="compile_sdk">Compile Sdk</string>
+    <string name="target_sdk">Target Sdk</string>
+
     <string name="search_dependencies">Search dependencies...</string>
     <string name="select_category">Select category...</string>
 </resources>

@@ -38,7 +38,7 @@ import org.locker.start_android.presentation.compose.theme.WhiteTextFieldColors
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MarsiTextField(
+fun StartAndroidTextField(
     value: String,
     onValueChanged: (String) -> Unit,
     modifier: Modifier = Modifier,
@@ -115,46 +115,5 @@ fun MarsiTextField(
     }
 }
 
-//@Composable
-//fun MarsiPasswordTextField(
-//    value: String,
-//    onValueChanged: (String) -> Unit,
-//    modifier: Modifier = Modifier,
-//    label: String? = null,
-//    placeHolder: String? = label,
-//    alpha: Float = 1f,
-//    labelTextStyle: TextStyle = Typography.titleSmall,
-//    contentPadding: PaddingValues = TextField48PaddingValues,
-//    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
-//    keyboardActions: KeyboardActions = KeyboardActions.Default,
-//) {
-//    var passwordVisible by rememberSaveable { mutableStateOf(false) }
-//
-//    MarsiTextField(
-//        label = label,
-//        value = value,
-//        placeHolder = placeHolder,
-//        onValueChanged = onValueChanged,
-//        alpha = alpha,
-//        labelTextStyle = labelTextStyle,
-//        contentPadding = contentPadding,
-//        keyboardActions = keyboardActions,
-//        keyboardOptions = keyboardOptions,
-//        trailingIconInside = {
-//            IconButton(onClick = { passwordVisible = !passwordVisible }) {
-//                Icon(
-//                    imageVector = ImageVector.vectorResource(
-//                        id = if (passwordVisible) R.drawable.ic_password_visible else
-//                            R.drawable.ic_password_visible_off
-//                    ),
-//                    contentDescription = null,
-//                    tint = Color.Black
-//                )
-//            }
-//        },
-//        visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-//        modifier = modifier
-//    )
-//}
 
 
