@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import org.koin.compose.KoinApplication
+import org.locker.start_android.di.httpClientModule
 import org.locker.start_android.di.viewModelModule
 import org.locker.start_android.presentation.compose.panes.start_pane.pane.StartPane
 import org.locker.start_android.presentation.compose.theme.StartAndroidTheme
@@ -13,7 +14,8 @@ fun App() {
     KoinApplication(
         application = {
             modules(
-                viewModelModule
+                viewModelModule,
+                httpClientModule
             )
         }
     ) {
