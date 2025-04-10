@@ -76,7 +76,7 @@ fun StartPane(
             modifier = MainPainWidthModifier.weight(1f)
         ) {
             DownloadRow(
-                onDownloadClick = {},
+                onDownloadClick = viewModel::onDownloadClick,
                 artifactValue = artifact,
                 onArtifactValueChange = viewModel::onProjectArtifactChange,
                 fileName = fileName,

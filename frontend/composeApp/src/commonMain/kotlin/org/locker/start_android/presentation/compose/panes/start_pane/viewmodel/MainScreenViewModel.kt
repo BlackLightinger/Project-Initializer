@@ -7,8 +7,13 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
+import org.locker.start_android.datasource.remote.model.BuildSrcDto
+import org.locker.start_android.datasource.remote.model.GenerateProjectDto
+import org.locker.start_android.datasource.remote.model.ProjectInfoDto
+import org.locker.start_android.datasource.remote.service.IGenerateProjectService
 
-class MainScreenViewModel : ViewModel() {
+class MainScreenViewModel(private val service: IGenerateProjectService) : ViewModel() {
     private val _projectArtifact: MutableStateFlow<String> =
         MutableStateFlow(DEFAULT_PROJECT_ARTIFACT)
     val projectArtifact: StateFlow<String> = _projectArtifact
@@ -41,6 +46,28 @@ class MainScreenViewModel : ViewModel() {
 
     fun onTargetSdkChange(value: String) {
         updateMutableIntFlow(value, _targetSdk)
+    }
+
+    fun onDownloadClick() {
+        viewModelScope.launch {
+            val generatedId = service.generate(
+                GenerateProjectDto(
+                    BuildSrcDto(
+                        targetSdk = targetSdk.value,
+                        minSdk = minSdk.value,
+                        compileSdk = compileSdk.value,
+                        applicationId = projectArtifact.value
+                    )
+                )
+            ) ?: return@launch
+
+            service.download(
+                ProjectInfoDto(
+                    uuid = generatedId,
+                    projectName = projectFileName.value
+                )
+            )
+        }
     }
 
     private fun updateMutableIntFlow(value: String, flow: MutableStateFlow<Int>) {

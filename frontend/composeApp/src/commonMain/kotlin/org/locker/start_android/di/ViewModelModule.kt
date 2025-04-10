@@ -7,5 +7,5 @@ import org.locker.start_android.presentation.compose.panes.start_pane.viewmodel.
 
 val viewModelModule = module {
     viewModel { DependenciesViewModel() }
-    viewModel { MainScreenViewModel() }
+    viewModel { MainScreenViewModel(get()) }
 }
