@@ -8,12 +8,13 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import org.locker.start_android.datasource.remote.model.BuildSrcDto
-import org.locker.start_android.datasource.remote.model.GenerateProjectDto
-import org.locker.start_android.datasource.remote.model.ProjectInfoDto
-import org.locker.start_android.datasource.remote.service.IGenerateProjectService
+import org.locker.start_android.domain.model.BuildSrc
+import org.locker.start_android.domain.model.GenerateProject
+import org.locker.start_android.domain.repository.IGenerateProjectRepository
 
-class MainScreenViewModel(private val service: IGenerateProjectService) : ViewModel() {
+class MainScreenViewModel(
+    private val androidRepository: IGenerateProjectRepository
+) : ViewModel() {
     private val _projectArtifact: MutableStateFlow<String> =
         MutableStateFlow(DEFAULT_PROJECT_ARTIFACT)
     val projectArtifact: StateFlow<String> = _projectArtifact
@@ -50,21 +51,15 @@ class MainScreenViewModel(private val service: IGenerateProjectService) : ViewMo
 
     fun onDownloadClick() {
         viewModelScope.launch {
-            val generatedId = service.generate(
-                GenerateProjectDto(
-                    BuildSrcDto(
+            androidRepository.download(
+                GenerateProject(
+                    buildSrc = BuildSrc(
                         targetSdk = targetSdk.value,
                         minSdk = minSdk.value,
                         compileSdk = compileSdk.value,
                         applicationId = projectArtifact.value
-                    )
-                )
-            ) ?: return@launch
-
-            service.download(
-                ProjectInfoDto(
-                    uuid = generatedId,
-                    projectName = projectFileName.value
+                    ),
+                    fileName = projectFileName.value
                 )
             )
         }
