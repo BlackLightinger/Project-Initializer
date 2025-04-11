@@ -34,4 +34,4 @@ jobs:
     - name: Run tests
       run: |
         cd frontend
-        ./gradlew test
+        ./gradlew allTests
