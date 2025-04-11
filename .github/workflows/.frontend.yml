@@ -8,21 +8,25 @@ on:
 
 jobs:
   build-and-test:
-    runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    - name: Set up JDK 17
-      uses: actions/setup-java@v2
-      with:
-        java-version: '17'
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'corretto'
+          java-version: '17'
+          
+      - name: Chmod
+        run: |
+        cd frontend
+        chmod +x ./gradlew
 
-    - name: Set up Kotlin and Gradle
-      uses: gradle/gradle-build-action@v2
-      with:
-        gradle-version: '7.5'
+    - name: Install dependencies
+        run: |
+        cd frontend
+        ./gradlew dependencies
 
     - name: Install dependencies and build the frontend
       run: |
