@@ -7,6 +7,7 @@ on:
   pull_request:
     branches:
       - '*'        # Запускать при создании PR в любую ветку
+  workflow_dispatch:
 
 jobs:
   build-and-test:
@@ -34,4 +35,4 @@ jobs:
     - name: Run tests
       run: |
         cd frontend
-        ./gradlew test
+        ./gradlew allTests
