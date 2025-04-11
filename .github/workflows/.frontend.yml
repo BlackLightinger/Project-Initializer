@@ -31,3 +31,9 @@ jobs:
 
       - name: Run Tests
         run: cd frontend && ./gradlew allTests
+      
+      - name: Upload test report as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-report
+          path: frontend/composeApp/build/reports/tests/allTests/index.html
