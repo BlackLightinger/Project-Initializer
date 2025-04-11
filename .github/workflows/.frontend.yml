@@ -7,7 +7,9 @@ on:
       - '*'
 
 jobs:
-  frontend:
+  build-and-test:
+    runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -21,11 +23,11 @@ jobs:
       - name: Chmod
         run: cd frontend && chmod +x ./gradlew
 
-    - name: Install dependencies
+      - name: Install dependencies
         run: cd frontend && ./gradlew dependencies
 
-    - name: Install dependencies and build the frontend
-      run: cd frontend && ./gradlew build
+      - name: Build
+        run: cd frontend && ./gradlew build
 
-    - name: Run tests
-      run: cd frontend && ./gradlew allTests
+      - name: Run Tests
+        run: cd frontend && ./gradlew allTests
