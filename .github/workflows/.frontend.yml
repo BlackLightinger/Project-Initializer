@@ -19,21 +19,13 @@ jobs:
           java-version: '17'
           
       - name: Chmod
-        run: |
-        cd frontend
-        chmod +x ./gradlew
+        run: cd frontend && chmod +x ./gradlew
 
     - name: Install dependencies
-        run: |
-        cd frontend
-        ./gradlew dependencies
+        run: cd frontend && ./gradlew dependencies
 
     - name: Install dependencies and build the frontend
-      run: |
-        cd frontend
-        ./gradlew build
+      run: cd frontend && ./gradlew build
 
     - name: Run tests
-      run: |
-        cd frontend
-        ./gradlew allTests
+      run: cd frontend && ./gradlew allTests
