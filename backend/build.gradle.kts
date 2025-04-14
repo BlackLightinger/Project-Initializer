@@ -31,14 +31,21 @@ dependencies {
     implementation("ch.qos.logback:logback-classic:$logback_version")
     implementation("io.insert-koin:koin-core:$koin_version")
     implementation("io.insert-koin:koin-ktor:$koin_version")
-    // SLF4J Logger
+
+    implementation("io.ktor:ktor-client-core:$ktor_version")
+    implementation("io.ktor:ktor-client-cio:$ktor_version")
+    implementation("io.ktor:ktor-client-apache:$ktor_version")
+    implementation("io.ktor:ktor-client-json:$ktor_version")
+
+    implementation("io.ktor:ktor-serialization-kotlinx-json:$ktor_version")
+    implementation("io.ktor:ktor-client-content-negotiation:$ktor_version")
+
     implementation("io.insert-koin:koin-logger-slf4j:$koin_version")
+
+
     testImplementation("io.ktor:ktor-server-tests-jvm:$ktor_version")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
 
-    implementation("io.ktor:ktor-client-core:$ktor_version")
-    implementation("io.ktor:ktor-client-content-negotiation:$ktor_version")
-    implementation("io.ktor:ktor-client-cio:$ktor_version")
     // Koin Test features
     testImplementation("io.insert-koin:koin-test:$koin_version")
     // Koin for JUnit 4
