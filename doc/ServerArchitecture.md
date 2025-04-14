@@ -39,6 +39,7 @@ data class Customer(val name: String, val email: String)
 
 ## III. Взаимодействие сервера с Gitlab API
 ### &nbsp; &nbsp; &nbsp; 1) Архитектура:
-![ServerArchitecture drawio](https://github.com/user-attachments/assets/3887af61-dbeb-472c-8ebb-ce7858ddec4e)
+![ServerArchitecture drawio](https://github.com/user-attachments/assets/0c733dd8-4562-4dc8-95a5-13f2d645e846)
+
 
 
