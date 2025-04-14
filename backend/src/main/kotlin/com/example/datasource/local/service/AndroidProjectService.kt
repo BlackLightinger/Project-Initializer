@@ -19,20 +19,6 @@ class AndroidProjectService : IAndoidProjectService {
     private val androidProjectPathString: String = resourceAndroidProject.file
     private val androidProjectTemplatePath: Path = File(androidProjectPathString).toPath()
 
-    override fun getProjectFiles(uuid: UUID): ProjectFilesInfoDto? {
-        val srcDir = getProjectPathByUuid(uuid) ?: return null
-        val srcDirPath = File(srcDir.filePath).toPath()
-        val arrFiles: MutableList<FilePathDto> = mutableListOf()
-
-        Files.walk(srcDirPath).forEach { filePath ->
-            val filePathName = filePath.toString()
-            val file = File(filePathName)
-            if (file.isFile)
-                arrFiles.add(FilePathDto(filePathName))
-        }
-        return ProjectFilesInfoDto(srcDir.filePath, arrFiles)
-    }
-
     override fun getProjectPathByUuid(uuid: UUID): FilePathDto? {
         val dirPath = "$userProjectsDir$uuid"
         return if (File(dirPath).exists()) FilePathDto(dirPath) else null
@@ -103,37 +89,36 @@ class AndroidProjectService : IAndoidProjectService {
     }
 }
 
-fun main() {
-    val libs = LibsVersionsDto(
-        "7.4.2",
-        "1.7.10",
-        "1.7.0",
-        "1.6.1",
-        "1.9.0",
-        "2.0.4",
-        "4.13.2",
-        "1.1.5",
-        "3.5.1"
-    )
-    val build = BuildSrcDto(
-        "VERSION_1_8",
-        "VERSION_1_8",
-        33,
-        24,
-        33,
-        1,
-        "1.0",
-        "com.example.project_initializer",
-        "androidx.test.runner.AndroidJUnitRunner",
-        true,
-        true,
-        "1.8"
-    )
-    val service = AndroidProjectService()
-    val uuid = service.getNewTemplateProject()
-    service.setLibsVersionsConfig(uuid, libs)
-    service.setBuildSrcConfig(uuid, build)
+//fun main()
+//{
+//    val libs = LibsVersionsDto("7.4.2",
+//        "1.7.10",
+//        "1.7.0",
+//        "1.6.1",
+//        "1.9.0",
+//        "2.0.4",
+//        "4.13.2",
+//        "1.1.5",
+//        "3.5.1"
+//    )
+//    val build = BuildSrcDto(
+//        "VERSION_1_8",
+//        "VERSION_1_8",
+//        33,
+//        24,
+//        33,
+//        1,
+//        "1.0",
+//        "com.example.project_initializer",
+//        "androidx.test.runner.AndroidJUnitRunner",
+//        true,
+//        true,
+//        "1.8"
+//    )
+//    val service = AndroidProjectService()
+//    val uuid = service.getNewTemplateProject()
+//    service.setLibsVersionsConfig(uuid, libs)
+//    service.setBuildSrcConfig(uuid, build)
 //    service.createZipByUuid(uuid, "app")
-    println(service.getProjectPathByUuid(uuid))
-    println(service.getProjectFiles(uuid))
-}
+//    println(service.getProjectPathByUuid(uuid))
+//}
