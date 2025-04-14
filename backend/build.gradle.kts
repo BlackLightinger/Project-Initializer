@@ -1,11 +1,13 @@
 val ktor_version: String by project
 val kotlin_version: String by project
 val logback_version: String by project
+val koin_version: String by project
+val koin_ktor: String by project
 
 plugins {
     kotlin("jvm") version "1.9.0"
     id("io.ktor.plugin") version "2.3.2"
-                id("org.jetbrains.kotlin.plugin.serialization") version "1.9.0"
+    id("org.jetbrains.kotlin.plugin.serialization") version "1.9.0"
 }
 
 group = "com.example"
@@ -27,10 +29,16 @@ dependencies {
     implementation("io.ktor:ktor-serialization-kotlinx-json-jvm:$ktor_version")
     implementation("io.ktor:ktor-server-netty-jvm:$ktor_version")
     implementation("ch.qos.logback:logback-classic:$logback_version")
+    implementation("io.insert-koin:koin-core:$koin_version")
+    implementation("io.insert-koin:koin-ktor:$koin_version")
+    // SLF4J Logger
+    implementation("io.insert-koin:koin-logger-slf4j:$koin_version")
     testImplementation("io.ktor:ktor-server-tests-jvm:$ktor_version")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
-    val koin_version = "3.4.1"
-    implementation("io.insert-koin:koin-core:$koin_version")
+
+    implementation("io.ktor:ktor-client-core:$ktor_version")
+    implementation("io.ktor:ktor-client-content-negotiation:$ktor_version")
+    implementation("io.ktor:ktor-client-cio:$ktor_version")
     // Koin Test features
     testImplementation("io.insert-koin:koin-test:$koin_version")
     // Koin for JUnit 4
@@ -38,8 +46,4 @@ dependencies {
     // Koin for JUnit 5
     testImplementation("io.insert-koin:koin-test-junit5:$koin_version")
     // Koin for Ktor
-    val koin_ktor = "3.4.1"
-    implementation("io.insert-koin:koin-ktor:$koin_ktor")
-    // SLF4J Logger
-    implementation("io.insert-koin:koin-logger-slf4j:$koin_ktor")
 }

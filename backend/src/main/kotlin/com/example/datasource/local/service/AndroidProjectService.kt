@@ -1,6 +1,7 @@
 package com.example.datasource.local.service
 
 import com.example.datasource.local.model.*
+import com.example.datasource.util.ZipManager
 import java.io.File
 import java.nio.file.Files
 import java.nio.file.Path
@@ -11,8 +12,11 @@ import kotlin.reflect.full.memberProperties
 class AndroidProjectService : IAndoidProjectService {
     private val projectPath: String = File("").toPath().toAbsolutePath().toString()
     private val userProjectsDir = "$projectPath/projects/"
+    private val userZipsDir = "$projectPath/zips/"
 
-    private val androidProjectPathString: String = javaClass.getResource("/androidApp").file
+    private val resourceAndroidProject =
+        requireNotNull(javaClass.getResource("/androidApp")) { "Template project must be in resources" }
+    private val androidProjectPathString: String = resourceAndroidProject.file
     private val androidProjectTemplatePath: Path = File(androidProjectPathString).toPath()
 
     override fun getProjectPathByUuid(uuid: UUID): FilePathDto? {
@@ -58,14 +62,23 @@ class AndroidProjectService : IAndoidProjectService {
         file.writeText(newContent)
     }
 
+    override fun createZipByUuid(uuid: UUID, projectName: String): FilePathDto? {
+        val srcPath = getProjectPathByUuid(uuid) ?: return null
+        createDir(userZipsDir)
+
+        val outputName = "$userZipsDir/$uuid.zip"
+        ZipManager.createZip(srcPath.filePath, outputName, projectName)
+        return FilePathDto(outputName)
+    }
+
     private fun resolveNewFilePath(uuid: UUID): Path {
-        createProjectsDir()
+        createDir(userProjectsDir)
         val newName = "$userProjectsDir/$uuid"
         return File(newName).toPath()
     }
 
-    private fun createProjectsDir() {
-        val dir = File(userProjectsDir)
+    private fun createDir(dirPath: String) {
+        val dir = File(dirPath)
         if (!dir.exists())
             dir.mkdir()
     }
@@ -93,7 +106,7 @@ class AndroidProjectService : IAndoidProjectService {
 //        "VERSION_1_8",
 //        33,
 //        24,
-//        3234,
+//        33,
 //        1,
 //        "1.0",
 //        "com.example.project_initializer",
@@ -106,5 +119,6 @@ class AndroidProjectService : IAndoidProjectService {
 //    val uuid = service.getNewTemplateProject()
 //    service.setLibsVersionsConfig(uuid, libs)
 //    service.setBuildSrcConfig(uuid, build)
+//    service.createZipByUuid(uuid, "app")
 //    println(service.getProjectPathByUuid(uuid))
 //}
