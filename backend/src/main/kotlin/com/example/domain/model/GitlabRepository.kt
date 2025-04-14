@@ -1,8 +1,8 @@
 package com.example.domain.model
 
-data class GitlabRepositoryConfig(
+data class GitlabRepository(
     val gitlabHost: String,
     val repositoryName: String,
     val branchName: String,
-    val groupId: Int?
+    val groupId: Int
 )
