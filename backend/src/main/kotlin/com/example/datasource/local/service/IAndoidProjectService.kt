@@ -4,7 +4,7 @@ import com.example.datasource.local.model.*
 import java.util.UUID
 
 interface IAndoidProjectService {
-    fun getProjectPathByUuid(uuid: UUID): FilePathDto?
+    fun getProjectFiles(uuid: UUID): ProjectFilesInfoDto?
     fun getNewTemplateProject(): UUID
     fun setBuildSrcConfig(uuid: UUID, buildSrc: BuildSrcDto)
     fun setLibsVersionsConfig(uuid: UUID, libsVersions: LibsVersionsDto)

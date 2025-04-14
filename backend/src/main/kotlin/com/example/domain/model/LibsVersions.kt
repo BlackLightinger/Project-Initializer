@@ -11,5 +11,4 @@ data class LibsVersions(
     val junitVersion: String,
     val extJunitVersion: String,
     val esspressoCoreVersion: String
-
 )

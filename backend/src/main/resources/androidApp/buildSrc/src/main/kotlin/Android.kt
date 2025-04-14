@@ -4,7 +4,6 @@ object Android {
     object CompileOptions {
         val sourceCompatibility = JavaVersion.sourceCompatibilityPlug
         val targetCompatibility = JavaVersion.targetCompatibilityPlug
-//        VERSION_1_8
     }
 
     object DefaultConfig {

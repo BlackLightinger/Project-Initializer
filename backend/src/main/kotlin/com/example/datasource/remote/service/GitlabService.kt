@@ -9,95 +9,65 @@ import io.ktor.client.request.headers
 import io.ktor.http.*
 import io.ktor.http.ContentType.Application.Json
 
-import io.ktor.serialization.kotlinx.json.json
-import kotlinx.serialization.json.Json
-import io.ktor.client.plugins.contentnegotiation.*
-import io.ktor.client.engine.cio.CIO
-import io.ktor.client.statement.*
-
 
 class GitlabService(private val client: HttpClient) : IGitlabService {
-    override suspend fun getToken(gitlabHost: String, authData: AuthDto): TokenDto {
-        val response = client.post("$gitlabHost$oauthEndpoint") {
+    override suspend fun getToken(gitlabHost: String, authData: AuthDto): TokenDto? {
+        val response = client.post("$gitlabHost$OAUTH_ENDPOINT") {
             contentType(Json)
             setBody(authData)
-        }.body<TokenDto>()
+        }
 
-        return response
+        return if (response.status == HttpStatusCode.OK) response.body<TokenDto>() else null
     }
 
-    override suspend fun getGroups(gitlabHost: String, token: String): GroupsListDto {
-        val gitlabUrl = "$gitlabHost$getGroupsEndpoint"
+    override suspend fun getGroups(gitlabHost: String, token: String): GroupsListDto? {
+        val gitlabUrl = "$gitlabHost$GROUPS_ENDPOINT"
         val response = client.get(gitlabUrl) {
             headers {
-                append("Authorization", "Bearer $token")
+                append(AUTH_HEADER, "$BEARER_HEADER $token")
             }
-        }.body<List<GroupDto>>()
+        }
 
-        return GroupsListDto(response)
+        return if (response.status == HttpStatusCode.OK) GroupsListDto(response.body<List<GroupDto>>()) else null
     }
 
     override suspend fun initializeRepository(
-        gitlabHost: String,
-        token: String,
-        repositoryConfig: RepositoryDto
-    ): Boolean {
-        val gitlabUrl = "$gitlabHost$initProjectEndpoint"
+        gitlabHost: String, token: String, repositoryConfig: RepositoryDto
+    ): ProjectInfoDto? {
+        val gitlabUrl = "$gitlabHost$PROJECT_ENDPOINT"
         val response = client.post(gitlabUrl) {
             headers {
-                append("Authorization", "Bearer $token")
+                append(AUTH_HEADER, "$BEARER_HEADER $token")
             }
             contentType(Json)
             setBody(repositoryConfig)
         }
 
-        return response.status == HttpStatusCode.Created
+        return if (response.status == HttpStatusCode.Created) response.body<ProjectInfoDto>() else null
     }
 
     override suspend fun pushProject(
-        gitlabHost: String,
-        token: String,
-        pushConfig: PushDto
+        gitlabHost: String, token: String, pushConfig: PushDto
     ): Boolean {
-        val gitlabUrl = "$gitlabHost/${pushConfig.id}${pushEndpoint}${pushConfig.filePath}"
+        val gitlabUrl = "$gitlabHost$PROJECT_ENDPOINT/${pushConfig.projectId}${PUSH_ENDPOINT}"
         val response = client.post(gitlabUrl) {
             headers {
-                append("Authorization", "Bearer $token")
+                append(AUTH_HEADER, "$BEARER_HEADER $token")
             }
             contentType(Json)
-            setBody(PushDto)
+            setBody(pushConfig)
         }
 
         return response.status == HttpStatusCode.Created
     }
 
     private companion object {
-        const val pushEndpoint = "/repository/files/"
-        const val initProjectEndpoint = "/projects"
-        const val getGroupsEndpoint = "/groups"
-        const val oauthEndpoint = "/oauth/token"
+        const val PUSH_ENDPOINT = "/repository/commits"
+        const val PROJECT_ENDPOINT = "/projects"
+        const val GROUPS_ENDPOINT = "/groups"
+        const val OAUTH_ENDPOINT = "/oauth/token"
+        const val AUTH_HEADER = "Authorization"
+        const val BEARER_HEADER = "Bearer"
     }
 
 }
-
-//suspend fun main() {
-//    val client = HttpClient(CIO) {
-//        install(ContentNegotiation) {
-//            json(Json {
-//                ignoreUnknownKeys = true
-//            })
-//        }
-//    }
-//    val service = GitlabService(client)
-//    val host = "https://gitlab.com"
-//    val auth = AuthDto(
-//        "",
-//        "",
-//        "password"
-//    )
-//    val token = service.getToken(host, auth)
-//    println(token)
-//    val grouphost = "https://gitlab.com/api/v4"
-//    val groups = service.getGroups(grouphost, token.accessToken)
-//    println(groups)
-//}
