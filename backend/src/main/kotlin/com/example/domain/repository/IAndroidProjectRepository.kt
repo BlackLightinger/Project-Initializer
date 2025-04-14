@@ -5,6 +5,6 @@ import java.util.UUID
 
 interface IAndroidProjectRepository {
     fun createNewProject(projectConfig: ProjectConfig): UUID
-    fun downloadProject(uuid: UUID): File
-    fun getFilePathByUUID(uuid: UUID): FilePath
+    fun downloadProject(uuid: UUID, projectName: String): FilePath?
+    fun getProjectFiles(uuid: UUID): ProjectFilesInfo?
 }
