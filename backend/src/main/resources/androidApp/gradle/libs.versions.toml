@@ -1,0 +1,27 @@
+[versions]
+# project
+gradleVersion = "gradleVersionPlug"
+kotlinPluginVersion = "kotlinPluginVersionPlug"
+
+# app
+coreKtxVersion = "coreKtxVersionPlug"
+appcompatVersion = "appcompatVersionPlug"
+materialVersion = "materialVersionPlug"
+constraintLayoutVersion = "constraintLayoutVersionPlug"
+junitVersion = "junitVersionPlug"
+extJunitVersion = "extJunitVersionPlug"
+esspressoCoreVersion = "esspressoCoreVersionPlug"
+
+[libraries]
+# project
+buildGradle = { module = "com.android.tools.build:gradle", version.ref = "gradleVersion" }
+kotlinGradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlinPluginVersion" }
+
+# app
+coreKtx = { module = "androidx.core:core-ktx", version.ref = "coreKtxVersion" }
+appcompat = {module = "androidx.appcompat:appcompat", version.ref = "appcompatVersion" }
+material = {module = "com.google.android.material:material", version.ref = "materialVersion" }
+constraintLayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintLayoutVersion" }
+junit = { module = "junit:junit", version.ref = "junitVersion" }
+extJunit = { module = "androidx.test.ext:junit", version.ref = "extJunitVersion" }
+esspressoCore = { module = "androidx.test.espresso:espresso-core", version.ref = "esspressoCoreVersion" }

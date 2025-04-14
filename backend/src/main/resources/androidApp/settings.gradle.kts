@@ -7,4 +7,5 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "Project Initializer"
-include ':app'
+
+include(":app")
